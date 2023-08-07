@@ -18,10 +18,10 @@ const quesSchema = mongoose.Schema(
     statement : String,
     answers: [
       {
-        answerText : {type : String},
-        answeredBy : {type : Schema.Types.ObjectId , ref : "User"},
-        upvotes : {type : Map , of : Boolean},
-        downvotes : {type : Map , of : Boolean},
+        answerText: { type: String},
+        answeredBy: { type: Schema.Types.ObjectId, ref: "User"},
+        upvotes: { type: Map, of: Boolean, default: {} },
+        downvotes: { type: Map, of: Boolean, default: {} },
       }
     ],
     picturePath: String,

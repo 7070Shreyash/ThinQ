@@ -53,23 +53,22 @@ export const upvote = async (req,res) => {
     try {
         const { quesId , answerId } = req.params;
         const { userId } = req.body;
-        const ques = await Ques.findById(quesId);
-        const answer = ques.answers.id(answerId);
+
+        const question = await Ques.findById(quesId);
+        const answer = question.answers.id(answerId);
+
         const isUpvoted = answer.upvotes.get(userId);
         if(isUpvoted) {
             answer.upvotes.delete(userId);
-        } else {
+        }
+        else{
             answer.upvotes.set(userId,true);
-        } 
-
-        ques.answers.map((_id) )
-
-        const updatedQues = await findByIdAndUpdate(
-            quesId,
-            {upvotes : ques.upvotes},
-            {new : true},
-        );
+            answer.downvotes.delete(userId);
+        }
+        await question.save();
+        const updatedQues = await Ques.findById(quesId);
         res.status(200).json(updatedQues);
+
     } catch (err) {
         res.status(404).json({message : err.message});
     }
@@ -78,36 +77,51 @@ export const upvote = async (req,res) => {
 
 export const downvote = async (req,res) => {
     try {
-        const { quesId } = req.params;
+        const { quesId , answerId } = req.params;
         const { userId } = req.body;
-        const ques = await Ques.findById(quesId);
-        const isDownvoted = ques.downvotes.get(userId);
 
+        const question = await Ques.findById(quesId);
+        const answer = question.answers.id(answerId);
+
+        const isDownvoted = answer.downvotes.get(userId);
         if(isDownvoted) {
-            ques.downvotes.delete(userId);
-        } else {
-            ques.downvotes.set(userId,true);
-        } 
-
-        const updatedQues = await findByIdAndUpdate(
-            quesId,
-            {downvotes : ques.downvotes},
-            {new : true},
-        );
+            answer.downvotes.delete(userId);
+        }
+        else{
+            answer.downvotes.set(userId,true);
+            answer.upvotes.delete(userId);
+        }
+        await question.save();
+        const updatedQues = await Ques.findById(quesId);
         res.status(200).json(updatedQues);
+
     } catch (err) {
         res.status(404).json({message : err.message});
     }
 } ;
 
-
 export const ansQues = async (req,res) => {
     try {
-        const { quesId } = req.params;
-        const { userId } = req.body;
-
-        const ques = Ques.findById(quesId);
-
+       const { quesId } = req.params;
+       const { userId , answerText } = req.body;
+       const user = await User.findById(userId);
+       const question = await Ques.findById(quesId);
+       const newAnswer = {
+        answerText,
+        answeredBy : userId,
+        upvotes : new Map(),
+        downvotes : new Map(),
+       };
+       question.answers.push(newAnswer);
+       await question.save();
+       user.questionAnswered++;
+       await findByIdAndUpdate(
+        userId,
+        {questionAnswered : user.questionAnswered},
+        {new : true},
+       )
+       const updatedQues = await Ques.findById(quesId);
+       res.status(200).json(updatedQues);
     } catch (err) {
         res.status(404).json({message : err.message});
     }

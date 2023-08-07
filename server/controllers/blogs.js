@@ -68,7 +68,7 @@ export const likeBlog = async (req,res) => {
         const updatedBlog = await Blog.findByIdAndUpdate(
             blogId,
             {likes : blog.likes},
-            {new : true}
+            {new : true},
         );
         res.status(200).json(updatedBlog);
 
