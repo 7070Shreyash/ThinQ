@@ -115,7 +115,7 @@ export const ansQues = async (req,res) => {
        question.answers.push(newAnswer);
        await question.save();
        user.questionAnswered++;
-       await findByIdAndUpdate(
+       await User.findByIdAndUpdate(
         userId,
         {questionAnswered : user.questionAnswered},
         {new : true},

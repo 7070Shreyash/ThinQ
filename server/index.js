@@ -11,7 +11,6 @@ import { fileURLToPath } from "url";
 import { register } from "./controllers/login.js";
 import { createQues } from "./controllers/ques.js";
 import { createBlog } from "./controllers/blogs.js";
-
 import loginRoutes from "./routes/login.js";
 import blogRoutes from "./routes/blogs.js";
 import quesRoutes from "./routes/ques.js";
@@ -43,23 +42,20 @@ const storage = multer.diskStorage({
   const upload = multer({ storage });
   
   app.post("/loginpage/register",upload.single("picture"),register); 
-
   app.post("/quespage/create",upload.single("picture"),createQues); 
-
   app.post("blogspage/create",upload.single("picture"),createBlog);
 
   app.use("/loginpage",loginRoutes);
   app.use("/blogspage",blogRoutes);
   app.use("/quespage",quesRoutes); 
   app.use("/users",userRoutes);
-
-
+  
   const PORT = process.env.PORT || 6001 ;
 
   mongoose.set('strictQuery', true); // ignoring warning
 
   mongoose
-    .connect(precess.env.MONGO_URL, {
+    .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

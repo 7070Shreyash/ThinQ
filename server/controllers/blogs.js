@@ -42,9 +42,8 @@ export const getFeedBlogs = async (req,res) => {
 export const getUserBlogs = async (req,res) => {
     try{
         const { userId } = req.params;
-        const blog = await Blog.find({ userId });
+        const blog = await Blog.findById(userId);
         res.status(200).json(blog);
-
     } catch(err) {
         res.status(500).json({message : err.message});
     }
@@ -55,7 +54,6 @@ export const likeBlog = async (req,res) => {
 
         const { blogId } = req.params;
         const { userId } = req.body;
-        
         const blog = await Blog.findById(blogId);
         const isLiked = blog.likes.get(userId);
 
@@ -71,7 +69,6 @@ export const likeBlog = async (req,res) => {
             {new : true},
         );
         res.status(200).json(updatedBlog);
-
     } catch(err) {
         res.status(500).json({message : err.message});
     }
