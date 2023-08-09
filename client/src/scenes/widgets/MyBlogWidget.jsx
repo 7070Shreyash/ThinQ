@@ -23,7 +23,7 @@ import {
   import WidgetWrapper from "components/WidgetWrapper";
   import { useState } from "react";
   import { useDispatch, useSelector } from "react-redux";
-  import { setBlogs, setPosts } from "state";
+  import { setBlogs } from "state";
   
 
   
@@ -61,7 +61,6 @@ const MyBlogWidget = ({ picturePath }) => {
       setTitle("");
       setDesc("");
     };
-
     return (
       <WidgetWrapper>
         <FlexBetween gap="1.5rem">
@@ -77,7 +76,9 @@ const MyBlogWidget = ({ picturePath }) => {
               padding: "1rem 2rem",
             }}
           />
-          {title && (
+        </FlexBetween>
+        <FlexBetween>
+        {title && (
             <InputBase
             placeholder="Add description of the Blog..."
             onChange={(e) => setDesc(e.target.value)}
@@ -87,7 +88,7 @@ const MyBlogWidget = ({ picturePath }) => {
               backgroundColor: palette.neutral.light,
               borderRadius: "2rem",
               padding: "1rem 2rem",
-              margin : "1rem 5rem ",
+              margin : "1rem 1rem 1rem 1rem",
             }}
           />
           )}

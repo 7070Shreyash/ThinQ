@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import UserWidget from "scenes/widgets/UserWidget";
 import Navbar from "scenes/navbar";
 import MyBlogWidget from "scenes/widgets/MyBlogWidget";
-
+import BlogsWidget from "scenes/widgets/BlogsWidget";
+import AdvertWidget from "scenes/widgets/AdvertWidget";
 const BlogsPage = () => {
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
     const { _id, picturePath } = useSelector((state) => state.user);
@@ -25,7 +26,14 @@ const BlogsPage = () => {
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
           <MyBlogWidget picturePath={picturePath} />
+          <BlogsWidget />
         </Box>
+        {isNonMobileScreens && (
+          <Box flexBasis="26%">
+            <AdvertWidget />
+            <Box m="2rem 0" />
+          </Box>
+        )}
       </Box>
         </Box>
     )

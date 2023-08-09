@@ -94,8 +94,8 @@ const UserWidget = ({ userId, picturePath }) => {
         </Box>
         <Divider />
         {/* THIRD ROW */}
-        <Box p="1rem 0">
-          <FlexBetween mb="0.5rem">
+        <Box p="1rem">
+          <FlexBetween>
             <Typography color={medium}>Questions Asked </Typography>
             <Typography color={main} fontWeight="500">
               {questionAsked}

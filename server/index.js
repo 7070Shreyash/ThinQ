@@ -43,7 +43,7 @@ const storage = multer.diskStorage({
   
   app.post("/loginpage/register",upload.single("picture"),register); 
   app.post("/quespage/create",upload.single("picture"),createQues); 
-  app.post("blogspage/create",upload.single("picture"),createBlog);
+  app.post("/blogspage/create",upload.single("picture"),createBlog);
 
   app.use("/loginpage",loginRoutes);
   app.use("/blogspage",blogRoutes);

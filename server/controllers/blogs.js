@@ -4,11 +4,15 @@ import User from "../models/User.js";
 export const createBlog = async (req,res) => {
     try{
         const { userId , title , description , picturePath } = req.body;
+        console.log(userId);
+        console.log(title);
+        console.log(description);
         const user = await User.findById(userId);
+        console.log(user);
         const newBlog = new Blog({
             userId,
             firstName : user.firstName,
-            lastName : user,lastName,
+            lastName : user.lastName,
             location : user.location,
             title,
             description,
@@ -16,8 +20,11 @@ export const createBlog = async (req,res) => {
             userPicturePath : user.picturePath,
             likes : {},
         });
+        console.log("H")
         await newBlog.save();
+        console.log("Hello")
         user.contributions += 10;
+        // console.log(user.contributions);
         await User.findByIdAndUpdate(
             userId,
             {contributions : user.contributions},
